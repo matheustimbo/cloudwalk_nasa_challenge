@@ -1,4 +1,4 @@
-import 'package:cloudwalk_nasa_challenge/app/presentation/pages/nasa_image_list.dart';
+import 'package:cloudwalk_nasa_challenge/app/presentation/pages/nasa_apods_list_page.dart';
 import 'package:cloudwalk_nasa_challenge/app/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       onGenerateRoute: RootRouteGenerator.generateRoute,
-      initialRoute: NasaImageList.routeName,
+      initialRoute: NasaApodsListPage.routeName,
     );
   }
 }
