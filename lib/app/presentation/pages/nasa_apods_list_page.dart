@@ -17,11 +17,25 @@ class NasaApodsListPage extends StatefulWidget {
 class _NasaApodsListPageState extends State<NasaApodsListPage> {
   final store = NasaApodsListPageStore();
   late final controller = NasaApodsListPageController(store: store);
+  final scrollController = ScrollController();
 
   @override
   void initState() {
     controller.initialize();
+    scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (scrollController.position.extentAfter < 50) {
+      controller.loadMoreNasaApods();
+    }
   }
 
   @override
@@ -71,7 +85,8 @@ class _NasaApodsListPageState extends State<NasaApodsListPage> {
                 ),
               );
             }
-            if (store.hasErrorLoadingNasaApodList) {
+            if (store.hasErrorLoadingNasaApodList ||
+                store.nasaApodList == null) {
               return SizedBox(
                 width: double.infinity,
                 child: Column(
@@ -91,20 +106,36 @@ class _NasaApodsListPageState extends State<NasaApodsListPage> {
                 ),
               );
             }
-            if (store.nasaApodList == null) {
-              return const SizedBox();
-            }
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-              ),
-              itemBuilder: (context, index) => NasaApodsListItem(
-                  nasaApod: store.nasaApodListSortedByDate![index]),
-              itemCount: store.nasaApodListSortedByDate!.length,
-              padding: const EdgeInsets.all(16),
-            );
+            return Observer(builder: (context) {
+              return CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.all(16),
+                    sliver: SliverGrid.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
+                      ),
+                      itemBuilder: (context, index) => NasaApodsListItem(
+                          nasaApod: store.nasaApodListSortedByDateDesc![index]),
+                      itemCount: store.nasaApodListSortedByDateDesc!.length,
+                    ),
+                  ),
+                  if (store.isLoadingMoreNasaApods)
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            });
           },
         ),
       ),

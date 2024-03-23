@@ -14,7 +14,7 @@ abstract class _NasaApodsListPageStoreBase with Store {
   void setNasaApodList(List<NasaApod> l) => nasaApodList = l;
 
   @computed
-  List<NasaApod>? get nasaApodListSortedByDate {
+  List<NasaApod>? get nasaApodListSortedByDateDesc {
     if (nasaApodList == null) {
       return null;
     }
@@ -35,6 +35,12 @@ abstract class _NasaApodsListPageStoreBase with Store {
   @action
   void setHasErrorLoadingNasaApodList(bool b) =>
       hasErrorLoadingNasaApodList = b;
+
+  @observable
+  bool isLoadingMoreNasaApods = false;
+
+  @action
+  void setIsLoadingMoreNasaApods(bool b) => isLoadingMoreNasaApods = b;
 
   @action
   void reset() {

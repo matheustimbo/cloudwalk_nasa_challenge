@@ -29,4 +29,22 @@ class NasaApodsListPageController {
       (r) => store.setNasaApodList(r),
     );
   }
+
+  Future<void> loadMoreNasaApods() async {
+    if (store.isLoadingMoreNasaApods) return;
+    store.setIsLoadingMoreNasaApods(true);
+    final result = await _getNasaApodsFromDateRangeUseCase(
+      DateRange(
+        startDate: store.nasaApodListSortedByDateDesc!.last.date
+            .subtract(const Duration(days: 22)),
+        endDate: store.nasaApodListSortedByDateDesc!.last.date
+            .subtract(const Duration(days: 1)),
+      ),
+    );
+    store.setIsLoadingMoreNasaApods(false);
+    if (result.isRight()) {
+      final newApods = result.getOrElse(() => []);
+      store.setNasaApodList([...store.nasaApodList!, ...newApods]);
+    }
+  }
 }

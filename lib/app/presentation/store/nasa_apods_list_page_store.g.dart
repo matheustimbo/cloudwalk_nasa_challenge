@@ -12,9 +12,9 @@ mixin _$NasaApodsListPageStore on _NasaApodsListPageStoreBase, Store {
   Computed<List<NasaApod>?>? _$nasaApodListSortedByDateComputed;
 
   @override
-  List<NasaApod>? get nasaApodListSortedByDate =>
+  List<NasaApod>? get nasaApodListSortedByDateDesc =>
       (_$nasaApodListSortedByDateComputed ??= Computed<List<NasaApod>?>(
-              () => super.nasaApodListSortedByDate,
+              () => super.nasaApodListSortedByDateDesc,
               name: '_NasaApodsListPageStoreBase.nasaApodListSortedByDate'))
           .value;
 
@@ -114,7 +114,7 @@ mixin _$NasaApodsListPageStore on _NasaApodsListPageStoreBase, Store {
 nasaApodList: ${nasaApodList},
 isLoadingNasaApodList: ${isLoadingNasaApodList},
 hasErrorLoadingNasaApodList: ${hasErrorLoadingNasaApodList},
-nasaApodListSortedByDate: ${nasaApodListSortedByDate}
+nasaApodListSortedByDate: ${nasaApodListSortedByDateDesc}
     ''';
   }
 }
