@@ -46,15 +46,5 @@ class DI {
     // usecases
     getIt.registerLazySingleton(
         () => GetNasaApodsFromDateRangeUseCase(getIt.get()));
-    // getIt
-    //     .registerLazySingleton(() => GetTopRatedMoviesListUseCase(getIt.get()));
-    // getIt.registerLazySingleton(
-    //     () => GetNowPlayingMoviesListUseCase(getIt.get()));
-    // getIt.registerLazySingleton(() => SearchMovieByTitleUseCase(getIt.get()));
-    // getIt.registerLazySingleton(() => GetMovieDetailsUseCase(getIt.get()));
-    // getIt.registerLazySingleton(() => GetMovieCreditsUseCase(getIt.get()));
-
-    //stores
-    // getIt.registerLazySingleton(() => MovieSearchPageStore());
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cloudwalk_nasa_challenge/app/data/models/nasa_apod.dart';
+import 'package:cloudwalk_nasa_challenge/shared/utils/date_formatters.dart';
 import 'package:mobx/mobx.dart';
 
 part 'nasa_apods_list_page_store.g.dart';
@@ -41,6 +42,29 @@ abstract class _NasaApodsListPageStoreBase with Store {
 
   @action
   void setIsLoadingMoreNasaApods(bool b) => isLoadingMoreNasaApods = b;
+
+  @observable
+  String typedSearchTerm = '';
+
+  @action
+  void setTypedSearchTerm(String s) => typedSearchTerm = s;
+
+  @computed
+  List<NasaApod>? get searchTermResultApodList {
+    if (nasaApodList == null) {
+      return null;
+    }
+    if (typedSearchTerm.isEmpty) {
+      return nasaApodList;
+    }
+    return nasaApodList!.where((element) {
+      return element.title
+              .toLowerCase()
+              .contains(typedSearchTerm.toLowerCase()) ||
+          DateFormatters.dateTimeToNasaDateString(element.date)
+              .contains(typedSearchTerm);
+    }).toList();
+  }
 
   @action
   void reset() {
