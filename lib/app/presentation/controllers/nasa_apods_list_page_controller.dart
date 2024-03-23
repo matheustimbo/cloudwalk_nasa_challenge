@@ -16,6 +16,7 @@ class NasaApodsListPageController {
 
   Future<void> initialize() async {
     store.reset();
+    store.setHasErrorLoadingNasaApodList(false);
     store.setIsLoadingNasaApodList(true);
     final result = await _getNasaApodsFromDateRangeUseCase(
       DateRange(
