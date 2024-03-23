@@ -18,7 +18,7 @@ class NasaApodsListPageController {
     store.setIsLoadingNasaApodList(true);
     final result = await _getNasaApodsFromDateRangeUseCase(
       DateRange(
-        startDate: DateTime.now().subtract(const Duration(days: 7)),
+        startDate: DateTime.now().subtract(const Duration(days: 21)),
         endDate: DateTime.now(),
       ),
     );

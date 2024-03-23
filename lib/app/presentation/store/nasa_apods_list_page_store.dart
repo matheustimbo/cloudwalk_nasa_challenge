@@ -13,6 +13,16 @@ abstract class _NasaApodsListPageStoreBase with Store {
   @action
   void setNasaApodList(List<NasaApod> l) => nasaApodList = l;
 
+  @computed
+  List<NasaApod>? get nasaApodListSortedByDate {
+    if (nasaApodList == null) {
+      return null;
+    }
+    var list = nasaApodList!;
+    list.sort((a, b) => b.date.compareTo(a.date));
+    return list;
+  }
+
   @observable
   bool isLoadingNasaApodList = false;
 

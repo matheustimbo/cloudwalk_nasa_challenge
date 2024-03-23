@@ -9,6 +9,15 @@ part of 'nasa_apods_list_page_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$NasaApodsListPageStore on _NasaApodsListPageStoreBase, Store {
+  Computed<List<NasaApod>?>? _$nasaApodListSortedByDateComputed;
+
+  @override
+  List<NasaApod>? get nasaApodListSortedByDate =>
+      (_$nasaApodListSortedByDateComputed ??= Computed<List<NasaApod>?>(
+              () => super.nasaApodListSortedByDate,
+              name: '_NasaApodsListPageStoreBase.nasaApodListSortedByDate'))
+          .value;
+
   late final _$nasaApodListAtom =
       Atom(name: '_NasaApodsListPageStoreBase.nasaApodList', context: context);
 
@@ -104,7 +113,8 @@ mixin _$NasaApodsListPageStore on _NasaApodsListPageStoreBase, Store {
     return '''
 nasaApodList: ${nasaApodList},
 isLoadingNasaApodList: ${isLoadingNasaApodList},
-hasErrorLoadingNasaApodList: ${hasErrorLoadingNasaApodList}
+hasErrorLoadingNasaApodList: ${hasErrorLoadingNasaApodList},
+nasaApodListSortedByDate: ${nasaApodListSortedByDate}
     ''';
   }
 }

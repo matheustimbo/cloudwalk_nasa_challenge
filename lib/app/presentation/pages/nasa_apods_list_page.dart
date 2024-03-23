@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/controllers/nasa_apods_list_page_controller.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/store/nasa_apods_list_page_store.dart';
+import 'package:cloudwalk_nasa_challenge/app/presentation/widgets/nasa_apods_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -26,6 +26,22 @@ class _NasaApodsListPageState extends State<NasaApodsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF2B2B2B),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF2B2B2B),
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: TextField(
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              icon: const Icon(Icons.search, color: Colors.white),
+              hintText: 'Search by title or date',
+              hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+            ),
+          ),
+        ),
+      ),
       body: Observer(
         builder: (context) {
           if (store.isLoadingNasaApodList) {
@@ -45,20 +61,16 @@ class _NasaApodsListPageState extends State<NasaApodsListPage> {
           if (store.nasaApodList == null) {
             return const SizedBox();
           }
-          return ListView.separated(
-            itemBuilder: (context, index) => ListTile(
-              title: Text(store.nasaApodList![index].title),
-              leading: CachedNetworkImage(
-                imageUrl: store.nasaApodList![index].url,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
             ),
-            separatorBuilder: (_, __) => const SizedBox(
-              height: 20,
-            ),
-            itemCount: store.nasaApodList!.length,
+            itemBuilder: (context, index) => NasaApodsListItem(
+                nasaApod: store.nasaApodListSortedByDate![index]),
+            itemCount: store.nasaApodListSortedByDate!.length,
+            padding: const EdgeInsets.all(16),
           );
         },
       ),
