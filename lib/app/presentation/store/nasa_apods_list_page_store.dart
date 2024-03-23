@@ -35,4 +35,11 @@ abstract class _NasaApodsListPageStoreBase with Store {
   @action
   void setHasErrorLoadingNasaApodList(bool b) =>
       hasErrorLoadingNasaApodList = b;
+
+  @action
+  void reset() {
+    nasaApodList = null;
+    isLoadingNasaApodList = false;
+    hasErrorLoadingNasaApodList = false;
+  }
 }

@@ -14,7 +14,8 @@ class NasaApodsListPageController {
   final _getNasaApodsFromDateRangeUseCase =
       DI.get<GetNasaApodsFromDateRangeUseCase>();
 
-  void initialize() async {
+  Future<void> initialize() async {
+    store.reset();
     store.setIsLoadingNasaApodList(true);
     final result = await _getNasaApodsFromDateRangeUseCase(
       DateRange(

@@ -3,6 +3,7 @@ import 'package:cloudwalk_nasa_challenge/app/presentation/store/nasa_apods_list_
 import 'package:cloudwalk_nasa_challenge/app/presentation/widgets/nasa_apods_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NasaApodsListPage extends StatefulWidget {
   static const routeName = '/nasa-apod-list';
@@ -42,37 +43,70 @@ class _NasaApodsListPageState extends State<NasaApodsListPage> {
           ),
         ),
       ),
-      body: Observer(
-        builder: (context) {
-          if (store.isLoadingNasaApodList) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (store.hasErrorLoadingNasaApodList) {
-            return Column(
-              children: [
-                const Text('An error occurred while loading the list of APODs'),
-                ElevatedButton(
-                  onPressed: controller.initialize,
-                  child: const Text('Try again'),
+      body: RefreshIndicator(
+        onRefresh: controller.initialize,
+        child: Observer(
+          builder: (context) {
+            if (store.isLoadingNasaApodList) {
+              return GridView.count(
+                padding: const EdgeInsets.all(16),
+                crossAxisCount: 2,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                physics: const NeverScrollableScrollPhysics(),
+                children: List.generate(
+                  10,
+                  (index) {
+                    return Shimmer.fromColors(
+                      baseColor: const Color(0x52FFFFFF),
+                      highlightColor: const Color(0x29FFFFFF),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0x7AFFFFFF),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ],
+              );
+            }
+            if (store.hasErrorLoadingNasaApodList) {
+              return SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'An error occurred while loading the list of APODs',
+                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                    ElevatedButton(
+                      onPressed: controller.initialize,
+                      child: const Text('Try again'),
+                    ),
+                  ],
+                ),
+              );
+            }
+            if (store.nasaApodList == null) {
+              return const SizedBox();
+            }
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+              ),
+              itemBuilder: (context, index) => NasaApodsListItem(
+                  nasaApod: store.nasaApodListSortedByDate![index]),
+              itemCount: store.nasaApodListSortedByDate!.length,
+              padding: const EdgeInsets.all(16),
             );
-          }
-          if (store.nasaApodList == null) {
-            return const SizedBox();
-          }
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-            ),
-            itemBuilder: (context, index) => NasaApodsListItem(
-                nasaApod: store.nasaApodListSortedByDate![index]),
-            itemCount: store.nasaApodListSortedByDate!.length,
-            padding: const EdgeInsets.all(16),
-          );
-        },
+          },
+        ),
       ),
     );
   }
