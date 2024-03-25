@@ -3,11 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
+import 'package:cloudwalk_nasa_challenge/app/data/datasources/nasa_apod_local_datasource.dart'
+    as _i5;
 import 'package:cloudwalk_nasa_challenge/app/data/datasources/nasa_apod_network_datasource.dart'
-    as _i2;
-import 'package:cloudwalk_nasa_challenge/app/data/models/nasa_apod.dart' as _i4;
+    as _i3;
+import 'package:cloudwalk_nasa_challenge/app/data/models/nasa_apod.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -23,13 +25,23 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeNasaApod_0 extends _i1.SmartFake implements _i2.NasaApod {
+  _FakeNasaApod_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [NasaApodNetworkDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNasaApodNetworkDatasource extends _i1.Mock
-    implements _i2.NasaApodNetworkDatasource {
+    implements _i3.NasaApodNetworkDatasource {
   @override
-  _i3.Future<List<_i4.NasaApod>> getNasaApodsFromDateRange(
+  _i4.Future<List<_i2.NasaApod>> getNasaApodsFromDateRange(
     DateTime? startDate,
     DateTime? endDate,
   ) =>
@@ -41,8 +53,59 @@ class MockNasaApodNetworkDatasource extends _i1.Mock
             endDate,
           ],
         ),
-        returnValue: _i3.Future<List<_i4.NasaApod>>.value(<_i4.NasaApod>[]),
+        returnValue: _i4.Future<List<_i2.NasaApod>>.value(<_i2.NasaApod>[]),
         returnValueForMissingStub:
-            _i3.Future<List<_i4.NasaApod>>.value(<_i4.NasaApod>[]),
-      ) as _i3.Future<List<_i4.NasaApod>>);
+            _i4.Future<List<_i2.NasaApod>>.value(<_i2.NasaApod>[]),
+      ) as _i4.Future<List<_i2.NasaApod>>);
+
+  @override
+  _i4.Future<_i2.NasaApod> getNasaApodFromDate(DateTime? date) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getNasaApodFromDate,
+          [date],
+        ),
+        returnValue: _i4.Future<_i2.NasaApod>.value(_FakeNasaApod_0(
+          this,
+          Invocation.method(
+            #getNasaApodFromDate,
+            [date],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.NasaApod>.value(_FakeNasaApod_0(
+          this,
+          Invocation.method(
+            #getNasaApodFromDate,
+            [date],
+          ),
+        )),
+      ) as _i4.Future<_i2.NasaApod>);
+}
+
+/// A class which mocks [NasaApodLocalDatasource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNasaApodLocalDatasource extends _i1.Mock
+    implements _i5.NasaApodLocalDatasource {
+  @override
+  _i2.NasaApod? getNasaApodByDateFromLocalDatabase(DateTime? date) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getNasaApodByDateFromLocalDatabase,
+          [date],
+        ),
+        returnValueForMissingStub: null,
+      ) as _i2.NasaApod?);
+
+  @override
+  _i4.Future<void> saveNasaApodOnLocalDatabase(_i2.NasaApod? nasaApod) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveNasaApodOnLocalDatabase,
+          [nasaApod],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

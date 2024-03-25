@@ -20,12 +20,18 @@ NasaApod _$NasaApodFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$NasaApod {
+  @HiveField(1)
   String? get copyright => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get url => throw _privateConstructorUsedError;
+  @HiveField(3)
   String get title => throw _privateConstructorUsedError;
+  @HiveField(4)
   String? get hdurl => throw _privateConstructorUsedError;
+  @HiveField(5)
   @JsonKey(name: 'media_type')
   String get mediaType => throw _privateConstructorUsedError;
+  @HiveField(6)
   @DateConverter()
   DateTime get date => throw _privateConstructorUsedError;
 
@@ -41,12 +47,12 @@ abstract class $NasaApodCopyWith<$Res> {
       _$NasaApodCopyWithImpl<$Res, NasaApod>;
   @useResult
   $Res call(
-      {String? copyright,
-      String url,
-      String title,
-      String? hdurl,
-      @JsonKey(name: 'media_type') String mediaType,
-      @DateConverter() DateTime date});
+      {@HiveField(1) String? copyright,
+      @HiveField(2) String url,
+      @HiveField(3) String title,
+      @HiveField(4) String? hdurl,
+      @HiveField(5) @JsonKey(name: 'media_type') String mediaType,
+      @HiveField(6) @DateConverter() DateTime date});
 }
 
 /// @nodoc
@@ -107,12 +113,12 @@ abstract class _$$NasaApodImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? copyright,
-      String url,
-      String title,
-      String? hdurl,
-      @JsonKey(name: 'media_type') String mediaType,
-      @DateConverter() DateTime date});
+      {@HiveField(1) String? copyright,
+      @HiveField(2) String url,
+      @HiveField(3) String title,
+      @HiveField(4) String? hdurl,
+      @HiveField(5) @JsonKey(name: 'media_type') String mediaType,
+      @HiveField(6) @DateConverter() DateTime date});
 }
 
 /// @nodoc
@@ -164,30 +170,38 @@ class __$$NasaApodImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NasaApodImpl implements _NasaApod {
+@HiveType(typeId: 1)
+class _$NasaApodImpl extends _NasaApod {
   _$NasaApodImpl(
-      {this.copyright,
-      required this.url,
-      required this.title,
-      this.hdurl,
-      @JsonKey(name: 'media_type') required this.mediaType,
-      @DateConverter() required this.date});
+      {@HiveField(1) this.copyright,
+      @HiveField(2) required this.url,
+      @HiveField(3) required this.title,
+      @HiveField(4) this.hdurl,
+      @HiveField(5) @JsonKey(name: 'media_type') required this.mediaType,
+      @HiveField(6) @DateConverter() required this.date})
+      : super._();
 
   factory _$NasaApodImpl.fromJson(Map<String, dynamic> json) =>
       _$$NasaApodImplFromJson(json);
 
   @override
+  @HiveField(1)
   final String? copyright;
   @override
+  @HiveField(2)
   final String url;
   @override
+  @HiveField(3)
   final String title;
   @override
+  @HiveField(4)
   final String? hdurl;
   @override
+  @HiveField(5)
   @JsonKey(name: 'media_type')
   final String mediaType;
   @override
+  @HiveField(6)
   @DateConverter()
   final DateTime date;
 
@@ -230,30 +244,40 @@ class _$NasaApodImpl implements _NasaApod {
   }
 }
 
-abstract class _NasaApod implements NasaApod {
+abstract class _NasaApod extends NasaApod {
   factory _NasaApod(
-      {final String? copyright,
-      required final String url,
-      required final String title,
-      final String? hdurl,
-      @JsonKey(name: 'media_type') required final String mediaType,
-      @DateConverter() required final DateTime date}) = _$NasaApodImpl;
+          {@HiveField(1) final String? copyright,
+          @HiveField(2) required final String url,
+          @HiveField(3) required final String title,
+          @HiveField(4) final String? hdurl,
+          @HiveField(5)
+          @JsonKey(name: 'media_type')
+          required final String mediaType,
+          @HiveField(6) @DateConverter() required final DateTime date}) =
+      _$NasaApodImpl;
+  _NasaApod._() : super._();
 
   factory _NasaApod.fromJson(Map<String, dynamic> json) =
       _$NasaApodImpl.fromJson;
 
   @override
+  @HiveField(1)
   String? get copyright;
   @override
+  @HiveField(2)
   String get url;
   @override
+  @HiveField(3)
   String get title;
   @override
+  @HiveField(4)
   String? get hdurl;
   @override
+  @HiveField(5)
   @JsonKey(name: 'media_type')
   String get mediaType;
   @override
+  @HiveField(6)
   @DateConverter()
   DateTime get date;
   @override

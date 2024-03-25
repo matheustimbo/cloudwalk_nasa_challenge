@@ -45,46 +45,49 @@ void main() {
 
   final exampleResult =
       exampleRawData.map((e) => NasaApod.fromJson(e)).toList();
+  final exampleStartDate = DateTime.now().subtract(const Duration(days: 2));
+  final exampleEndDate = DateTime.now();
 
   group('GetNasaApodsFromDateRange', () {
     test('should get a NasaApod List from the Nasa API', () async {
-      when(mockDio.get('/planetary/apod',
-              queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(
-              data: exampleRawData,
-              statusCode: 200,
-              requestOptions: RequestOptions()));
+      when(mockDio.get('/planetary/apod', queryParameters: {
+        'start_date': DateFormatters.dateTimeToNasaDateString(exampleStartDate),
+        'end_date': DateFormatters.dateTimeToNasaDateString(exampleEndDate),
+      })).thenAnswer((_) async => Response(
+            data: exampleRawData,
+            statusCode: 200,
+            requestOptions: RequestOptions(),
+          ));
 
       final result = await datasource.getNasaApodsFromDateRange(
-        DateTime.now().subtract(const Duration(days: 2)),
-        DateTime.now(),
+        exampleStartDate,
+        exampleEndDate,
       );
 
       expect(result, equals(exampleResult));
       verify(mockDio.get('/planetary/apod', queryParameters: {
-        'start_date': DateFormatters.dateTimeToNasaDateString(
-            DateTime.now().subtract(const Duration(days: 2))),
-        'end_date': DateFormatters.dateTimeToNasaDateString(DateTime.now()),
+        'start_date': DateFormatters.dateTimeToNasaDateString(exampleStartDate),
+        'end_date': DateFormatters.dateTimeToNasaDateString(exampleEndDate),
       }));
       verifyNoMoreInteractions(mockDio);
     });
 
     test('should throw a DioException when the network request fails',
         () async {
-      when(mockDio.get('/planetary/apod',
-              queryParameters: anyNamed('queryParameters')))
-          .thenThrow(DioException(requestOptions: RequestOptions()));
+      when(mockDio.get('/planetary/apod', queryParameters: {
+        'start_date': DateFormatters.dateTimeToNasaDateString(exampleStartDate),
+        'end_date': DateFormatters.dateTimeToNasaDateString(exampleEndDate),
+      })).thenThrow(DioException(requestOptions: RequestOptions()));
 
       final result = datasource.getNasaApodsFromDateRange(
-        DateTime.now().subtract(const Duration(days: 2)),
-        DateTime.now(),
+        exampleStartDate,
+        exampleEndDate,
       );
 
       expect(result, throwsA(isA<DioException>()));
       verify(mockDio.get('/planetary/apod', queryParameters: {
-        'start_date': DateFormatters.dateTimeToNasaDateString(
-            DateTime.now().subtract(const Duration(days: 2))),
-        'end_date': DateFormatters.dateTimeToNasaDateString(DateTime.now()),
+        'start_date': DateFormatters.dateTimeToNasaDateString(exampleStartDate),
+        'end_date': DateFormatters.dateTimeToNasaDateString(exampleEndDate),
       }));
       verifyNoMoreInteractions(mockDio);
     });

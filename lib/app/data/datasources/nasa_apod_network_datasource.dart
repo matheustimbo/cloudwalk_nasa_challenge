@@ -5,4 +5,5 @@ abstract class NasaApodNetworkDatasource {
     DateTime startDate,
     DateTime endDate,
   );
+  Future<NasaApod> getNasaApodFromDate(DateTime date);
 }
