@@ -11,11 +11,11 @@ jobs:
     steps:
       #1 Checkout repository
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
         #2 setup java
       - name: Set Up Java
-        uses: actions/setup-java@v3.12.0
+        uses: actions/setup-java@v4
         with:
           distribution: "oracle"
           java-version: "17"
@@ -61,7 +61,7 @@ jobs:
 
         #10 upload build artifacts
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Releases
           path: |
