@@ -43,44 +43,42 @@ void main() {
   final endDate = DateTime.now();
   final exampleException = DioException(requestOptions: RequestOptions());
 
-  group('GetNasaApodsFromDateRangeUseCase', () {
-    test('should call getNasaApodsFromDateRange from NasaApodRepository',
-        () async {
-      when(mockNasaApodRepository.getNasaApodsFromDateRange(
-        startDate,
-        endDate,
-      )).thenAnswer((_) async => Right(exampleApodList));
+  test('should call getNasaApodsFromDateRange from NasaApodRepository',
+      () async {
+    when(mockNasaApodRepository.getNasaApodsFromDateRange(
+      startDate,
+      endDate,
+    )).thenAnswer((_) async => Right(exampleApodList));
 
-      final result = await getNasaApodsFromDateRangeUseCase(DateRange(
-        startDate: startDate,
-        endDate: endDate,
-      ));
+    final result = await getNasaApodsFromDateRangeUseCase(DateRange(
+      startDate: startDate,
+      endDate: endDate,
+    ));
 
-      expect(result, equals(Right(exampleApodList)));
-      verify(mockNasaApodRepository.getNasaApodsFromDateRange(
-        startDate,
-        endDate,
-      ));
-      verifyNoMoreInteractions(mockNasaApodRepository);
-    });
+    expect(result, equals(Right(exampleApodList)));
+    verify(mockNasaApodRepository.getNasaApodsFromDateRange(
+      startDate,
+      endDate,
+    ));
+    verifyNoMoreInteractions(mockNasaApodRepository);
+  });
 
-    test('should return a NasaApiFailure when an exception occurs', () async {
-      when(mockNasaApodRepository.getNasaApodsFromDateRange(
-        startDate,
-        endDate,
-      )).thenAnswer((_) async => Left(NasaApiFailure(exampleException)));
+  test('should return a NasaApiFailure when an exception occurs', () async {
+    when(mockNasaApodRepository.getNasaApodsFromDateRange(
+      startDate,
+      endDate,
+    )).thenAnswer((_) async => Left(NasaApiFailure(exampleException)));
 
-      final result = await getNasaApodsFromDateRangeUseCase(DateRange(
-        startDate: startDate,
-        endDate: endDate,
-      ));
+    final result = await getNasaApodsFromDateRangeUseCase(DateRange(
+      startDate: startDate,
+      endDate: endDate,
+    ));
 
-      expect(result, equals(Left(NasaApiFailure(exampleException))));
-      verify(mockNasaApodRepository.getNasaApodsFromDateRange(
-        startDate,
-        endDate,
-      ));
-      verifyNoMoreInteractions(mockNasaApodRepository);
-    });
+    expect(result, equals(Left(NasaApiFailure(exampleException))));
+    verify(mockNasaApodRepository.getNasaApodsFromDateRange(
+      startDate,
+      endDate,
+    ));
+    verifyNoMoreInteractions(mockNasaApodRepository);
   });
 }

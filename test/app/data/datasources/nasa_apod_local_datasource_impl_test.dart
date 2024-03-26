@@ -26,61 +26,55 @@ void main() {
     explanation: '',
   );
   final exampleDate = exampleNasaApod.date;
+  group('getNasaApodByDateFromLocal', () {
+    test('should return a NasaApod from the local database', () {
+      when(mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)))
+          .thenReturn(exampleNasaApod);
 
-  group('NasaApodLocalDatasourceImplTest', () {
-    group('getNasaApodByDateFromLocal', () {
-      test('should return a NasaApod from the local database', () {
-        when(mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)))
-            .thenReturn(exampleNasaApod);
+      final result = datasource.getNasaApodByDateFromLocalDatabase(exampleDate);
 
-        final result =
-            datasource.getNasaApodByDateFromLocalDatabase(exampleDate);
-
-        expect(result, exampleNasaApod);
-        verify(
-            mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)));
-        verifyNoMoreInteractions(mockBox);
-      });
-
-      test('should throw exception when the local database fails', () {
-        when(mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)))
-            .thenThrow(Exception());
-
-        expect(() => datasource.getNasaApodByDateFromLocalDatabase(exampleDate),
-            throwsA(isA<Exception>()));
-
-        verify(
-            mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)));
-        verifyNoMoreInteractions(mockBox);
-      });
+      expect(result, exampleNasaApod);
+      verify(mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)));
+      verifyNoMoreInteractions(mockBox);
     });
 
-    group('saveNasaApodOnLocalDatabase', () {
-      test('should save NasaApod on local database', () {
-        when(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
-                exampleNasaApod))
-            .thenAnswer((_) async => Future.value(null));
+    test('should throw exception when the local database fails', () {
+      when(mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)))
+          .thenThrow(Exception());
 
-        final result = datasource.saveNasaApodOnLocalDatabase(exampleNasaApod);
+      expect(() => datasource.getNasaApodByDateFromLocalDatabase(exampleDate),
+          throwsA(isA<Exception>()));
 
-        expect(result, isA<Future<void>>());
-        verify(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
-            exampleNasaApod));
-        verifyNoMoreInteractions(mockBox);
-      });
+      verify(mockBox.get(DateFormatters.dateTimeToNasaDateString(exampleDate)));
+      verifyNoMoreInteractions(mockBox);
+    });
+  });
 
-      test('should throw exception when the local database fails', () {
-        when(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
-                exampleNasaApod))
-            .thenThrow(Exception());
+  group('saveNasaApodOnLocalDatabase', () {
+    test('should save NasaApod on local database', () {
+      when(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
+              exampleNasaApod))
+          .thenAnswer((_) async => Future.value(null));
 
-        expect(() => datasource.saveNasaApodOnLocalDatabase(exampleNasaApod),
-            throwsA(isA<Exception>()));
+      final result = datasource.saveNasaApodOnLocalDatabase(exampleNasaApod);
 
-        verify(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
-            exampleNasaApod));
-        verifyNoMoreInteractions(mockBox);
-      });
+      expect(result, isA<Future<void>>());
+      verify(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
+          exampleNasaApod));
+      verifyNoMoreInteractions(mockBox);
+    });
+
+    test('should throw exception when the local database fails', () {
+      when(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
+              exampleNasaApod))
+          .thenThrow(Exception());
+
+      expect(() => datasource.saveNasaApodOnLocalDatabase(exampleNasaApod),
+          throwsA(isA<Exception>()));
+
+      verify(mockBox.put(DateFormatters.dateTimeToNasaDateString(exampleDate),
+          exampleNasaApod));
+      verifyNoMoreInteractions(mockBox);
     });
   });
 }
