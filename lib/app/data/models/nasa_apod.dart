@@ -19,6 +19,7 @@ abstract class NasaApod extends HiveObject with _$NasaApod {
     @HiveField(4) String? hdurl,
     @HiveField(5) @JsonKey(name: 'media_type') required String mediaType,
     @HiveField(6) @DateConverter() required DateTime date,
+    @HiveField(7) required String explanation,
   }) = _NasaApod;
 
   factory NasaApod.fromJson(Map<String, dynamic> json) =>

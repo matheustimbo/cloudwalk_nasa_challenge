@@ -34,6 +34,8 @@ mixin _$NasaApod {
   @HiveField(6)
   @DateConverter()
   DateTime get date => throw _privateConstructorUsedError;
+  @HiveField(7)
+  String get explanation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +54,8 @@ abstract class $NasaApodCopyWith<$Res> {
       @HiveField(3) String title,
       @HiveField(4) String? hdurl,
       @HiveField(5) @JsonKey(name: 'media_type') String mediaType,
-      @HiveField(6) @DateConverter() DateTime date});
+      @HiveField(6) @DateConverter() DateTime date,
+      @HiveField(7) String explanation});
 }
 
 /// @nodoc
@@ -74,6 +77,7 @@ class _$NasaApodCopyWithImpl<$Res, $Val extends NasaApod>
     Object? hdurl = freezed,
     Object? mediaType = null,
     Object? date = null,
+    Object? explanation = null,
   }) {
     return _then(_value.copyWith(
       copyright: freezed == copyright
@@ -100,6 +104,10 @@ class _$NasaApodCopyWithImpl<$Res, $Val extends NasaApod>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      explanation: null == explanation
+          ? _value.explanation
+          : explanation // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -118,7 +126,8 @@ abstract class _$$NasaApodImplCopyWith<$Res>
       @HiveField(3) String title,
       @HiveField(4) String? hdurl,
       @HiveField(5) @JsonKey(name: 'media_type') String mediaType,
-      @HiveField(6) @DateConverter() DateTime date});
+      @HiveField(6) @DateConverter() DateTime date,
+      @HiveField(7) String explanation});
 }
 
 /// @nodoc
@@ -138,6 +147,7 @@ class __$$NasaApodImplCopyWithImpl<$Res>
     Object? hdurl = freezed,
     Object? mediaType = null,
     Object? date = null,
+    Object? explanation = null,
   }) {
     return _then(_$NasaApodImpl(
       copyright: freezed == copyright
@@ -164,6 +174,10 @@ class __$$NasaApodImplCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      explanation: null == explanation
+          ? _value.explanation
+          : explanation // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -178,7 +192,8 @@ class _$NasaApodImpl extends _NasaApod {
       @HiveField(3) required this.title,
       @HiveField(4) this.hdurl,
       @HiveField(5) @JsonKey(name: 'media_type') required this.mediaType,
-      @HiveField(6) @DateConverter() required this.date})
+      @HiveField(6) @DateConverter() required this.date,
+      @HiveField(7) required this.explanation})
       : super._();
 
   factory _$NasaApodImpl.fromJson(Map<String, dynamic> json) =>
@@ -204,10 +219,13 @@ class _$NasaApodImpl extends _NasaApod {
   @HiveField(6)
   @DateConverter()
   final DateTime date;
+  @override
+  @HiveField(7)
+  final String explanation;
 
   @override
   String toString() {
-    return 'NasaApod(copyright: $copyright, url: $url, title: $title, hdurl: $hdurl, mediaType: $mediaType, date: $date)';
+    return 'NasaApod(copyright: $copyright, url: $url, title: $title, hdurl: $hdurl, mediaType: $mediaType, date: $date, explanation: $explanation)';
   }
 
   @override
@@ -222,13 +240,15 @@ class _$NasaApodImpl extends _NasaApod {
             (identical(other.hdurl, hdurl) || other.hdurl == hdurl) &&
             (identical(other.mediaType, mediaType) ||
                 other.mediaType == mediaType) &&
-            (identical(other.date, date) || other.date == date));
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.explanation, explanation) ||
+                other.explanation == explanation));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, copyright, url, title, hdurl, mediaType, date);
+  int get hashCode => Object.hash(
+      runtimeType, copyright, url, title, hdurl, mediaType, date, explanation);
 
   @JsonKey(ignore: true)
   @override
@@ -246,15 +266,15 @@ class _$NasaApodImpl extends _NasaApod {
 
 abstract class _NasaApod extends NasaApod {
   factory _NasaApod(
-          {@HiveField(1) final String? copyright,
-          @HiveField(2) required final String url,
-          @HiveField(3) required final String title,
-          @HiveField(4) final String? hdurl,
-          @HiveField(5)
-          @JsonKey(name: 'media_type')
-          required final String mediaType,
-          @HiveField(6) @DateConverter() required final DateTime date}) =
-      _$NasaApodImpl;
+      {@HiveField(1) final String? copyright,
+      @HiveField(2) required final String url,
+      @HiveField(3) required final String title,
+      @HiveField(4) final String? hdurl,
+      @HiveField(5)
+      @JsonKey(name: 'media_type')
+      required final String mediaType,
+      @HiveField(6) @DateConverter() required final DateTime date,
+      @HiveField(7) required final String explanation}) = _$NasaApodImpl;
   _NasaApod._() : super._();
 
   factory _NasaApod.fromJson(Map<String, dynamic> json) =
@@ -280,6 +300,9 @@ abstract class _NasaApod extends NasaApod {
   @HiveField(6)
   @DateConverter()
   DateTime get date;
+  @override
+  @HiveField(7)
+  String get explanation;
   @override
   @JsonKey(ignore: true)
   _$$NasaApodImplCopyWith<_$NasaApodImpl> get copyWith =>

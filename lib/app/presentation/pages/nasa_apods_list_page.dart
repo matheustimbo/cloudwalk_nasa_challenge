@@ -4,6 +4,7 @@ import 'package:cloudwalk_nasa_challenge/app/presentation/widgets/nasa_apods_lis
 import 'package:cloudwalk_nasa_challenge/app/presentation/widgets/nasa_apods_list_initial_loading_indicator.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/widgets/nasa_apods_list_item.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/widgets/nasa_apods_list_page_appbar_search_input.dart';
+import 'package:cloudwalk_nasa_challenge/shared/utils/test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -104,7 +105,8 @@ class _NasaApodsListPageState extends State<NasaApodsListPage> {
                       crossAxisSpacing: 8,
                     ),
                     itemBuilder: (context, index) => NasaApodsListItem(
-                        nasaApod: store.nasaApodListSortedByDateDesc![index]),
+                      nasaApod: store.nasaApodListSortedByDateDesc![index],
+                    ),
                     itemCount: store.nasaApodListSortedByDateDesc!.length,
                   ),
                 ),
@@ -113,7 +115,10 @@ class _NasaApodsListPageState extends State<NasaApodsListPage> {
                     child: Padding(
                       padding: EdgeInsets.all(16),
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          key: TestKeys
+                              .nasaApodsListPageLoadingMoreNasaApodsIndicator,
+                        ),
                       ),
                     ),
                   ),

@@ -23,13 +23,14 @@ class NasaApodImplAdapter extends TypeAdapter<_$NasaApodImpl> {
       hdurl: fields[4] as String?,
       mediaType: fields[5] as String,
       date: fields[6] as DateTime,
+      explanation: fields[7] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$NasaApodImpl obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(1)
       ..write(obj.copyright)
       ..writeByte(2)
@@ -41,7 +42,9 @@ class NasaApodImplAdapter extends TypeAdapter<_$NasaApodImpl> {
       ..writeByte(5)
       ..write(obj.mediaType)
       ..writeByte(6)
-      ..write(obj.date);
+      ..write(obj.date)
+      ..writeByte(7)
+      ..write(obj.explanation);
   }
 
   @override
@@ -67,6 +70,7 @@ _$NasaApodImpl _$$NasaApodImplFromJson(Map<String, dynamic> json) =>
       hdurl: json['hdurl'] as String?,
       mediaType: json['media_type'] as String,
       date: DateTime.parse(json['date'] as String),
+      explanation: json['explanation'] as String,
     );
 
 Map<String, dynamic> _$$NasaApodImplToJson(_$NasaApodImpl instance) =>
@@ -77,4 +81,5 @@ Map<String, dynamic> _$$NasaApodImplToJson(_$NasaApodImpl instance) =>
       'hdurl': instance.hdurl,
       'media_type': instance.mediaType,
       'date': instance.date.toIso8601String(),
+      'explanation': instance.explanation,
     };

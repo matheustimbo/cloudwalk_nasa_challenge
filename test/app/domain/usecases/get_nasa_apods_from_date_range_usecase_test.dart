@@ -24,8 +24,20 @@ void main() {
   });
 
   final exampleApodList = [
-    NasaApod(url: '', title: '', mediaType: '', date: DateTime.now()),
-    NasaApod(url: '', title: '', mediaType: '', date: DateTime.now()),
+    NasaApod(
+      url: '',
+      title: '',
+      mediaType: '',
+      date: DateTime.now(),
+      explanation: '',
+    ),
+    NasaApod(
+      url: '',
+      title: '',
+      mediaType: '',
+      date: DateTime.now(),
+      explanation: '',
+    ),
   ];
   final startDate = DateTime.now().subtract(const Duration(days: 2));
   final endDate = DateTime.now();

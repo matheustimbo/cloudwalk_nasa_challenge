@@ -1,3 +1,4 @@
+import 'package:cloudwalk_nasa_challenge/shared/utils/test_keys.dart';
 import 'package:flutter/material.dart';
 
 class NasaApodsListPageAppbarSearchInput extends StatelessWidget {
@@ -17,6 +18,7 @@ class NasaApodsListPageAppbarSearchInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextField(
+        key: TestKeys.nasaApodsListPageAppbarSearchInputTextField,
         controller: searchTextController,
         style: const TextStyle(color: Colors.white),
         onChanged: setTypedSearchTerm,

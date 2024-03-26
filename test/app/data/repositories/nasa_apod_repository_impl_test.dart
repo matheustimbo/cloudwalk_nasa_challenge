@@ -33,8 +33,20 @@ void main() {
   final endDate = DateTime.now();
   final startDate = endDate.subtract(const Duration(days: 1));
   final exampleApodList = [
-    NasaApod(url: '', title: '', mediaType: '', date: endDate),
-    NasaApod(url: '', title: '', mediaType: '', date: startDate),
+    NasaApod(
+      url: '',
+      title: '',
+      mediaType: '',
+      date: endDate,
+      explanation: '',
+    ),
+    NasaApod(
+      url: '',
+      title: '',
+      mediaType: '',
+      date: startDate,
+      explanation: '',
+    ),
   ];
 
   final exampleException = DioException(requestOptions: RequestOptions());

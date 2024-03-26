@@ -18,8 +18,13 @@ void main() {
     datasource = NasaApodLocalDatasourceImpl(mockBox);
   });
 
-  final exampleNasaApod =
-      NasaApod(url: '', title: '', mediaType: '', date: DateTime.now());
+  final exampleNasaApod = NasaApod(
+    url: '',
+    title: '',
+    mediaType: '',
+    date: DateTime.now(),
+    explanation: '',
+  );
   final exampleDate = exampleNasaApod.date;
 
   group('NasaApodLocalDatasourceImplTest', () {

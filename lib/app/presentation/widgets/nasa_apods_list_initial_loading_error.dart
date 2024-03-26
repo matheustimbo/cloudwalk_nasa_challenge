@@ -1,3 +1,4 @@
+import 'package:cloudwalk_nasa_challenge/shared/utils/test_keys.dart';
 import 'package:flutter/material.dart';
 
 class NasaApodsListInitialLoadingError extends StatelessWidget {
@@ -22,6 +23,7 @@ class NasaApodsListInitialLoadingError extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           ElevatedButton(
+            key: TestKeys.nasaApodsListInitialLoadingErrorTryAgainBtn,
             onPressed: onTryAgainPressed,
             child: const Text('Try again'),
           ),

@@ -1,12 +1,12 @@
 import 'package:cloudwalk_nasa_challenge/app/data/datasources/nasa_apod_local_datasource.dart';
 import 'package:cloudwalk_nasa_challenge/app/data/datasources/nasa_apod_network_datasource.dart';
 import 'package:cloudwalk_nasa_challenge/app/data/models/nasa_apod.dart';
+import 'package:cloudwalk_nasa_challenge/app/domain/entities/date_range.dart';
 import 'package:cloudwalk_nasa_challenge/app/domain/repositories/nasa_apod_repository.dart';
 import 'package:cloudwalk_nasa_challenge/shared/failures/failure.dart';
 import 'package:cloudwalk_nasa_challenge/shared/failures/nasa_api_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 class NasaApodRepositoryImpl implements NasaApodRepository {
   final NasaApodNetworkDatasource nasaApodNetworkDatasource;
@@ -22,12 +22,8 @@ class NasaApodRepositoryImpl implements NasaApodRepository {
     DateTime startDate,
     DateTime endDate,
   ) async {
-    final List<DateTime> allDatesToGet = [
-      for (DateTime i = startDate;
-          !DateUtils.isSameDay(i, endDate.add(const Duration(days: 1)));
-          i = i.add(const Duration(days: 1)))
-        i,
-    ];
+    final List<DateTime> allDatesToGet =
+        DateRange(startDate: startDate, endDate: endDate).getAllDatesBetween();
     List<NasaApod?> apodsOnLocal = allDatesToGet.map((DateTime date) {
       try {
         return nasaApodLocalDatasource.getNasaApodByDateFromLocalDatabase(date);
