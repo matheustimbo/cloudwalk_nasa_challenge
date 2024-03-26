@@ -1,14 +1,11 @@
-name: "Build & Release"
+name: "Test and Build"
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   build:
-    name: Build & Release
+    name: Test and Build
     runs-on: macos-latest
 
     steps:
@@ -71,11 +68,3 @@ jobs:
             build/app/outputs/flutter-apk/app-release.apk
             build/app/outputs/bundle/release/app-release.aab
             build/ios_build.tar.gz
-
-        #11 create release with build artifacts
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
