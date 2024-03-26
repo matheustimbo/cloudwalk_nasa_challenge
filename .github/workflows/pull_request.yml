@@ -40,18 +40,26 @@ jobs:
           cat .env
 
         #6 run test
-      - name: Test flutter app
+      - name: Run unit tests
         run: flutter test
 
-        #7 build apk
+      - uses: futureware-tech/simulator-action@v3
+        with:
+          model: "iPhone 14"
+
+        #7 run integration test
+      - name: Run integration test
+        run: flutter test integration_test
+
+        #8 build apk
       - name: Build APK
         run: flutter build apk --release
 
-        #8 build aab
+        #9 build aab
       - name: Build appBundle
         run: flutter build appbundle
 
-        #9 build ipa
+        #10 build ipa
       - name: Build IPA
         run: flutter build ipa --no-codesign
       - name: Compress Archives and IPAs
@@ -59,7 +67,7 @@ jobs:
           cd build
           tar -czf ios_build.tar.gz ios
 
-        #10 upload build artifacts
+        #11 upload build artifacts
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
