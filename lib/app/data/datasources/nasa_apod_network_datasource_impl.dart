@@ -23,16 +23,4 @@ class NasaApodNetworkDatasourceImpl implements NasaApodNetworkDatasource {
 
     return (response.data as List).map((e) => NasaApod.fromJson(e)).toList();
   }
-
-  @override
-  Future<NasaApod> getNasaApodFromDate(DateTime date) async {
-    final response = await dio.get(
-      '/planetary/apod',
-      queryParameters: {
-        'date': DateFormatters.dateTimeToNasaDateString(date),
-      },
-    );
-
-    return NasaApod.fromJson(response.data);
-  }
 }

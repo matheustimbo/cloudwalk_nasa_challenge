@@ -92,41 +92,4 @@ void main() {
       verifyNoMoreInteractions(mockDio);
     });
   });
-
-  group('getNasaApodFromDate', () {
-    test('should get a NasaApod from the Nasa API', () async {
-      final exampleDate = DateTime.now();
-      when(mockDio.get('/planetary/apod', queryParameters: {
-        'date': DateFormatters.dateTimeToNasaDateString(exampleDate),
-      })).thenAnswer((_) async => Response(
-            data: exampleRawData.first,
-            statusCode: 200,
-            requestOptions: RequestOptions(),
-          ));
-
-      final result = await datasource.getNasaApodFromDate(exampleDate);
-
-      expect(result, equals(exampleResult.first));
-      verify(mockDio.get('/planetary/apod', queryParameters: {
-        'date': DateFormatters.dateTimeToNasaDateString(exampleDate),
-      }));
-      verifyNoMoreInteractions(mockDio);
-    });
-
-    test('should throw a DioException when the network request fails',
-        () async {
-      final exampleDate = DateTime.now();
-      when(mockDio.get('/planetary/apod', queryParameters: {
-        'date': DateFormatters.dateTimeToNasaDateString(exampleDate),
-      })).thenThrow(DioException(requestOptions: RequestOptions()));
-
-      final result = datasource.getNasaApodFromDate(exampleDate);
-
-      expect(result, throwsA(isA<DioException>()));
-      verify(mockDio.get('/planetary/apod', queryParameters: {
-        'date': DateFormatters.dateTimeToNasaDateString(exampleDate),
-      }));
-      verifyNoMoreInteractions(mockDio);
-    });
-  });
 }
