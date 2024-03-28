@@ -30,6 +30,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   json_annotation: ^4.8.1
+  widgetbook_annotation: ^3.1.0
+  widgetbook: ^3.7.1
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +45,7 @@ dev_dependencies:
   hive_generator: ^2.0.1
   integration_test:
     sdk: flutter
+  widgetbook_generator: ^3.7.0
 
 flutter:
   uses-material-design: true
