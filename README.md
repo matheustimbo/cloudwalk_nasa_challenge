@@ -2,9 +2,11 @@
 
 CloudwalkNasaChallenge is an app built to show the pictures from NASA's "Astronomy Picture of the Day" using NASA's own [API](https://api.nasa.gov/)
 
+<td><img src="https://github.com/matheustimbo/cloudwalk_nasa_challenge/blob/assets/screenshots/assets/gifs/app_usage.gif?raw=true" width="33%"></td>
+
 ## Features
 
-- List NASA's APOD(Astronomy Picture of the Day) from NASA's API
+- Lists NASA's APOD(Astronomy Picture of the Day) from NASA's API
 - Search by APOD's title and date
 - Offline-first approach
 - Avoids refetching the same APOD already present in cache even if has internet connection since each day APOD's content will most likely never change
@@ -29,6 +31,19 @@ CloudwalkNasaChallenge is an app built to show the pictures from NASA's "Astrono
     <tr>
         <td><img src="https://github.com/matheustimbo/cloudwalk_nasa_challenge/blob/assets/screenshots/assets/screenshots/details_apod_with_image.png?raw=true" width="100%"></td>
         <td><img src="https://github.com/matheustimbo/cloudwalk_nasa_challenge/blob/assets/screenshots/assets/screenshots/details_apod_with_video.png?raw=true" width="100%"></td>
+    </tr>
+</table>
+
+## Widgetbook
+
+Widgetbook is a widget catalog that allows to test them quickly on multiple devices and serves as a interactive documentation of the existing UI components
+
+<table>
+    <tr>
+        <td>Widgetbook</td>
+    </tr>
+    <tr>
+        <td><img src="https://github.com/matheustimbo/cloudwalk_nasa_challenge/blob/assets/screenshots/assets/gifs/widgetbook.gif?raw=true" width="100%"></td>
     </tr>
 </table>
 
@@ -63,7 +78,7 @@ Check your flutter sdk integrity
 
     flutter doctor
 
-clone the project and navigate to it's directory
+Clone the project and navigate to it's directory
 
     git clone https://github.com/matheustimbo/cloudwalk_nasa_challenge
     cd cloudwalk_nasa_challenge
@@ -73,10 +88,21 @@ Create a .env file at the root of the project following the .env.example structu
     echo NASA_API_KEY=YOUR_NASA_API_KEY > .env
     cat .env
 
-then, download project dependencies and run in debug mode
+Then, download project dependencies and run in debug mode
 
     flutter pub get
     flutter run
+
+With all the dependencies downloaded, you can also use vscode's launch button with the "cloudwalk_nasa_challenge" configuration.
+
+## How to run the widgetbook
+
+You can run the widgetbook app with the following command
+
+    flutter run -t lib/widgetbook/widgetbook.dart
+
+If you want to specify the device, you can add "-d macos" parameter, for example.
+Alternatively, you can use vscode's launch button with the "Widgetbook Debug (MacOS)" configuration.
 
 ## How to run unit tests and generate a html coverage report
 
@@ -84,7 +110,7 @@ Run the tests with
 
     flutter test --coverage
 
-And then, generate and open the report with
+And then, generate and open the test coverage report with
 
     genhtml ./coverage/lcov.info -o coverage && open ./coverage/index.html
 
@@ -94,7 +120,7 @@ With a Android emulator or iOS simulator open, run
 
     flutter test integration_test
 
-## How to generate .g, .freezed and .mocks files
+## How to generate widgetbook.directories.g.dart and .g, .freezed, and .mocks files
 
 This project utilizes build_runner for generating files for models, mobx stores and mocks. To generate then, you can run
 
