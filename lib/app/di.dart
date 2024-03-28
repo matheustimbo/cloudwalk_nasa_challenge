@@ -6,6 +6,8 @@ import 'package:cloudwalk_nasa_challenge/app/data/models/nasa_apod.dart';
 import 'package:cloudwalk_nasa_challenge/app/data/repositories/nasa_apod_repository_impl.dart';
 import 'package:cloudwalk_nasa_challenge/app/domain/repositories/nasa_apod_repository.dart';
 import 'package:cloudwalk_nasa_challenge/app/domain/usecases/get_nasa_apods_from_date_range_usecase.dart';
+import 'package:cloudwalk_nasa_challenge/app/presentation/controllers/nasa_apods_list_page_controller.dart';
+import 'package:cloudwalk_nasa_challenge/app/presentation/store/nasa_apods_list_page_store.dart';
 import 'package:cloudwalk_nasa_challenge/shared/utils/constants.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
@@ -55,5 +57,12 @@ class DI {
     // usecases
     getIt.registerLazySingleton(
         () => GetNasaApodsFromDateRangeUseCase(getIt.get()));
+
+    //stores
+    getIt.registerFactory(() => NasaApodsListPageStore());
+
+    //controllers
+    getIt.registerFactoryParam((NasaApodsListPageStore store, _) =>
+        NasaApodsListPageController(store: store));
   }
 }

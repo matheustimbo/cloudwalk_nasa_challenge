@@ -1,3 +1,4 @@
+import 'package:cloudwalk_nasa_challenge/app/di.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/controllers/nasa_apods_list_page_controller.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/store/nasa_apods_list_page_store.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/widgets/nasa_apods_list_initial_loading_error.dart';
@@ -18,8 +19,8 @@ class NasaApodsListPage extends StatefulWidget {
 }
 
 class _NasaApodsListPageState extends State<NasaApodsListPage> {
-  final store = NasaApodsListPageStore();
-  late final controller = NasaApodsListPageController(store: store);
+  final store = DI.get<NasaApodsListPageStore>();
+  late final controller = DI.get<NasaApodsListPageController>(param1: store);
   final scrollController = ScrollController();
   final searchTextController = TextEditingController();
 
