@@ -1,21 +1,26 @@
+import 'package:cloudwalk_nasa_challenge/app/data/datasources/nasa_apod_local_datasource.dart';
+import 'package:cloudwalk_nasa_challenge/app/data/datasources/nasa_apod_network_datasource.dart';
 import 'package:cloudwalk_nasa_challenge/app/data/models/nasa_apod.dart';
+import 'package:cloudwalk_nasa_challenge/app/data/repositories/nasa_apod_repository_impl.dart';
 import 'package:cloudwalk_nasa_challenge/app/domain/entities/date_range.dart';
+import 'package:cloudwalk_nasa_challenge/app/domain/repositories/nasa_apod_repository.dart';
 import 'package:cloudwalk_nasa_challenge/app/domain/usecases/get_nasa_apods_from_date_range_usecase.dart';
+import 'package:cloudwalk_nasa_challenge/app/presentation/controllers/nasa_apods_list_page_controller.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/pages/nasa_apod_details_page.dart';
 import 'package:cloudwalk_nasa_challenge/app/presentation/pages/nasa_apods_list_page.dart';
+import 'package:cloudwalk_nasa_challenge/app/presentation/store/nasa_apods_list_page_store.dart';
 import 'package:cloudwalk_nasa_challenge/app/routes.dart';
 import 'package:collection/collection.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
-import '../test/app/presentation/pages/nasa_apods_list_page_test.mocks.dart';
+import '../test/app/data/repositories/nasa_apod_repository_impl_test.mocks.dart';
 
 void main() {
-  late MockGetNasaApodsFromDateRangeUseCase
-      mockGetNasaApodsFromDateRangeUseCase;
+  late MockNasaApodNetworkDatasource mockNasaApodNetworkDatasource;
+  late MockNasaApodLocalDatasource mockNasaApodLocalDatasource;
 
   Widget createWidgetUnderTest() {
     return MaterialApp(
@@ -29,10 +34,29 @@ void main() {
   }
 
   setUp(() {
-    mockGetNasaApodsFromDateRangeUseCase =
-        MockGetNasaApodsFromDateRangeUseCase();
-    GetIt.instance.registerLazySingleton<GetNasaApodsFromDateRangeUseCase>(
-        () => mockGetNasaApodsFromDateRangeUseCase);
+    mockNasaApodNetworkDatasource = MockNasaApodNetworkDatasource();
+    mockNasaApodLocalDatasource = MockNasaApodLocalDatasource();
+
+    //datasources
+    GetIt.instance.registerLazySingleton<NasaApodNetworkDatasource>(
+        () => mockNasaApodNetworkDatasource);
+    GetIt.instance.registerLazySingleton<NasaApodLocalDatasource>(
+        () => mockNasaApodLocalDatasource);
+
+    //repositories
+    GetIt.instance.registerLazySingleton<NasaApodRepository>(() =>
+        NasaApodRepositoryImpl(GetIt.instance.get(), GetIt.instance.get()));
+
+    // usecases
+    GetIt.instance.registerLazySingleton(
+        () => GetNasaApodsFromDateRangeUseCase(GetIt.instance.get()));
+
+    //stores
+    GetIt.instance.registerFactory(() => NasaApodsListPageStore());
+
+    //controllers
+    GetIt.instance.registerFactoryParam((NasaApodsListPageStore store, _) =>
+        NasaApodsListPageController(store: store));
   });
 
   tearDown(() {
@@ -57,8 +81,10 @@ void main() {
   testWidgets(
       'should navigate to details page when tapping on the first nasaapodlistitem',
       (widgetTester) async {
-    when(mockGetNasaApodsFromDateRangeUseCase.call(dateRange))
-        .thenAnswer((_) async => Right(exampleApodList));
+    when(mockNasaApodLocalDatasource.getNasaApodByDateFromLocalDatabase(any))
+        .thenReturn(null);
+    when(mockNasaApodNetworkDatasource.getNasaApodsFromDateRange(any, any))
+        .thenAnswer((_) async => (exampleApodList));
 
     await widgetTester.pumpWidget(createWidgetUnderTest());
 
